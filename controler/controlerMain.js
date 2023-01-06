@@ -29,7 +29,6 @@ canvas.onclick = function(event) {
     bot.click(event, canvas);
 }
 
-
 // appelle draw toutes les x millisecondes
 setInterval(draw, 10);
 

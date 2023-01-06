@@ -7,6 +7,7 @@ class Bot {
 		this.drawBtn();
 	}
 
+    // dessin du btn
     drawBtn(){
         // arriere plan btn
 		this.ctx.beginPath();
@@ -27,6 +28,7 @@ class Bot {
 		this.ctx.strokeText('BOT', 465, 450);
     }
 
+    // activation / desactivation du bot
     changeEtat(){
         if (this.active){
             this.active = false;
@@ -38,19 +40,14 @@ class Bot {
         }
     }
 
+    // gestion du click sur le btn
     click(e, canvas){
-        e.preventDefault();
-        e.stopPropagation();
-        var input = e;
         var canvasPosition = canvas.getBoundingClientRect();
-        var inputX = input.pageX - canvasPosition.left;
-        var inputY = input.pageY - canvasPosition.top;
-        console.log(inputX);
-        console.log(inputY);
+        var inputX = e.pageX - canvasPosition.left;
+        var inputY = e.pageY - canvasPosition.top;
 
         if (inputX > 405 && inputX < 525 && inputY > 420 && inputY < 480){
             this.changeEtat();
         }
     }
-
 }

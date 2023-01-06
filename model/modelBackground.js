@@ -7,6 +7,7 @@ class Background {
 		this.draw();
 	}
 
+	// dessin bg
 	draw(){
 
 		// arriere plan
@@ -17,7 +18,7 @@ class Background {
 		this.ctx.closePath();
 
 		// grille bg
-		for (let i = 1; i < 24; i++) {
+		for (let i = 0; i < 25; i++) {
 			this.ctx.beginPath();
 			this.ctx.moveTo(60,90+i*30);
 			this.ctx.lineTo(360,90+i*30);
@@ -26,7 +27,7 @@ class Background {
 			this.ctx.strokeStyle = "#50505055"
 			this.ctx.stroke()
 		}
-		for (let i = 1; i < 10; i++) {
+		for (let i = 0; i < 11; i++) {
 			this.ctx.beginPath();
 			this.ctx.moveTo(60+i*30,90);
 			this.ctx.lineTo(60+i*30,810);
@@ -38,7 +39,7 @@ class Background {
 
 		// grille bg border
 		this.ctx.beginPath();
-		this.ctx.rect(60, 90, 300, 720);
+		this.ctx.rect(55, 85, 310, 730);
 		this.ctx.strokeStyle = "#FF0000";
 		this.ctx.shadowBlur = 10;
 		this.ctx.shadowColor = "#FF0000";
@@ -65,8 +66,5 @@ class Background {
 		
 		// titre score
 		this.ctx.strokeText('SCORE', 465, 300);
-
-		
-		
 	}
 }
