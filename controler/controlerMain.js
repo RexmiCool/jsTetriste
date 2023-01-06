@@ -8,7 +8,10 @@ let bg = new Background(600, 900, ctx);
 // creation du score
 let score = new Score(ctx, 0);
 
+// creation du bat
+let bot = new Bot(ctx);
 
+// fonction de dessin
 function draw(){
 
     // nettoyage du canva
@@ -17,12 +20,16 @@ function draw(){
 	// mis a jour des dessins
     bg.draw();
     score.draw();
+    bot.drawBtn();
     
-    // incrementation du score
-    score.add(25);
-
 }
 
+// gestion du click pour le btn du bot
+canvas.onclick = function(event) {
+    bot.click(event, canvas);
+}
+
+
 // appelle draw toutes les x millisecondes
-setInterval(draw, 1000);
+setInterval(draw, 10);
 
