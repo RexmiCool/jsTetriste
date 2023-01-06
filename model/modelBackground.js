@@ -21,6 +21,8 @@ class Background {
 			this.ctx.beginPath();
 			this.ctx.moveTo(60,90+i*30);
 			this.ctx.lineTo(360,90+i*30);
+			this.ctx.shadowBlur = 0;
+			this.ctx.shadowColor = "#FF000000";
 			this.ctx.strokeStyle = "#50505055"
 			this.ctx.stroke()
 		}
@@ -28,6 +30,8 @@ class Background {
 			this.ctx.beginPath();
 			this.ctx.moveTo(60+i*30,90);
 			this.ctx.lineTo(60+i*30,810);
+			this.ctx.shadowBlur = 0;
+			this.ctx.shadowColor = "#FF000000";
 			this.ctx.strokeStyle = "#50505055"
 			this.ctx.stroke()
 		}
