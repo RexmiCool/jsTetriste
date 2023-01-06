@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <style>
+      /* Some style for the page */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="tetris" width="200" height="480"></canvas>
+    <script>
+      // Get a reference to the canvas element
+      var canvas = document.getElementById('tetris');
+      // Get a reference to the canvas' context, which is used to draw on the canvas
+      var ctx = canvas.getContext('2d');
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-
-</body>
+      // Set the fill style to a nice blue color
+      ctx.fillStyle = '#0000FF';
+      // Draw a rectangle with the fill style
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    </script>
+  </body>
 </html>
