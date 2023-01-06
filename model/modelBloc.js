@@ -1,10 +1,3 @@
-forms{
-    1 : [[1, 1, 1, 1]],
-    2 : [[1, 1], [1, 1]],
-    3 : [[1, 1, 1], [0, 1, 0]]
-    
-}
-
 class Block {
 	constructor(locX, locY, ctx, color) {
 		this.locX = locX;
