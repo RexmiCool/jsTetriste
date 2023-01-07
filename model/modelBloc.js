@@ -10,7 +10,7 @@ class Block {
 	draw(){
 
         ctx.beginPath();
-		ctx.rect(this.locX+1, this.locX+1, 28, 28);
+		ctx.rect(this.locX+1, this.locY+1, 28, 28);
 		ctx.fillStyle = this.color;
 		ctx.fill();
 		ctx.closePath();
