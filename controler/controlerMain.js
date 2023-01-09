@@ -27,6 +27,7 @@ let score = new Score(ctx, 0);
 // creation du bat
 let bot = new Bot(ctx);
 
+// event clavier
 document.addEventListener('keyup', (e) => {
     if (e.code === "ArrowUp"){rotateRight()}
     else if (e.code === "ArrowDown"){rotateLeft()}
@@ -35,6 +36,7 @@ document.addEventListener('keyup', (e) => {
     else if (e.code === "Space"){moveDown()}
 });
 
+// fonction de déplacement du tetromino (peut etre les mettre dans model)
 function rotateRight(){
     if (teer.getMatrixRotateRight()[0].length+teer.getLocX()>10) {
         return 0;
@@ -308,7 +310,7 @@ function createTetromino(){
 }
 teer = createTetromino();
 
-
+// verifie si une ligne est complete (a mettre dans model, de la grille je pense)
 function checkFullLine(){
     for (let i = 0; i < blocChain.length; i++) {
         var lineFull = true;
@@ -323,6 +325,7 @@ function checkFullLine(){
     }	
 }
 
+// clean la ligne complete (a mettre dans model, de la grille je pense)
 function cleanLine(numLine){
     let copy = [];
     for (let i = 0; i < 24; i++) {
@@ -371,8 +374,6 @@ function draw(){
         }
     }	
 
-
-
 }
 
 // gestion du click pour le btn du bot
@@ -380,8 +381,9 @@ canvas.onclick = function(event) {
     bot.click(event, canvas);
 }
 
-// appelle draw toutes les x millisecondes
+// appel a draw toutes les x millisecondes
 setInterval(draw, 10);
 
+// appel a moveDown toute les x milliseconde
 setInterval(moveDown, 1000);
 
