@@ -7,3 +7,5 @@ TODO :
 - front a améliorer
 - faire un beau game over
 - ajouter la possibilité de rejouer quand game over
+- mettre des commentaires explicatifs
+- respecter la structure MVC
