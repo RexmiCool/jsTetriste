@@ -12,6 +12,8 @@ class Block {
         ctx.beginPath();
 		ctx.rect(this.locX+1, this.locY+1, 28, 28);
 		ctx.fillStyle = this.color;
+		ctx.shadowBlur = 0;
+		ctx.shadowColor = "#FFFFFF";
 		ctx.fill();
 		ctx.closePath();
 		
