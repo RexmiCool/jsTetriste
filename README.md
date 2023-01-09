@@ -9,3 +9,4 @@ TODO :
 - ajouter la possibilité de rejouer quand game over
 - mettre des commentaires explicatifs
 - respecter la structure MVC
+- ajouter des anims
