@@ -4,7 +4,7 @@ class Bot {
         this.ctx = ctx;
 		this.active = false;
         this.color = "#FF0000";
-		this.drawBtn();
+		//this.drawBtn();
 	}
 
     // dessin du btn
@@ -38,6 +38,11 @@ class Bot {
             this.active = true;
             this.color = "#00FF00";
         }
+    }
+
+    // getter
+    getEtat(){
+        return this.active;
     }
 
     // gestion du click sur le btn
