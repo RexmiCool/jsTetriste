@@ -31,6 +31,8 @@ class Controller {
     jeu(){
 
         this.model.drawCanva();
+
+        
     }
 
     
@@ -49,11 +51,11 @@ const app = new Controller(new Model(ctx), new View(ctx));
 
 // event clavier
 document.addEventListener('keyup', (e) => {
-    if (e.code === "ArrowUp"){teer.doRotateRight(grille)}
-    else if (e.code === "ArrowDown"){teer.doRotateLeft(grille)}
-    else if (e.code === "ArrowRight"){teer.doMoveRight(grille)}
-    else if (e.code === "ArrowLeft"){teer.doMoveLeft(grille)}
-    else if (e.code === "Space"){teer.doMoveDown(grille, score)}
+    if (e.code === "ArrowUp"){app.model.teer.doRotateRight(app.model.grille)}
+    else if (e.code === "ArrowDown"){app.model.teer.doRotateLeft(app.model.grille)}
+    else if (e.code === "ArrowRight"){app.model.teer.doMoveRight(app.model.grille)}
+    else if (e.code === "ArrowLeft"){app.model.teer.doMoveLeft(app.model.grille)}
+    else if (e.code === "Space"){app.model.teer.doMoveDown(app.model.grille, app.model.score)}
 });
 
 // event click
