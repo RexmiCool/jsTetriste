@@ -9,11 +9,11 @@ let dictForms = {
 };
 
 class Tetromino {
-	constructor(locX, locY, ctx, type, color) {
+	constructor(locX, locY, ctx, type) {
 		this.locX = locX;
 		this.locY = locY;
 		this.ctx = ctx;
-		this.color = color;
+		this.color = type;
 		this.type = type;
 		this.orientation = 1;
 	}
@@ -159,7 +159,6 @@ class Tetromino {
 	}
 
 	doMoveDown(grille, score){
-		console.log("run");
 		var ok = true;
 	
 		for (let i = 0; i < this.getMatrix().length; i++) {
@@ -250,14 +249,14 @@ class Tetromino {
 
 	rdmTet(grille){
 		this.locX = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0)));
-		this.locY = 0
-		this.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1)
-		this.color = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1)
+		this.locY = 0;
+		this.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1);
+		this.color = this.type;
 		while (this.getMatrix()[0].length + teer.getLocX() - 1 >= 10){
 			this.locX = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0)));
-			this.locY = 0
-			this.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1)
-			this.color = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1)		} 
+			this.locY = 0;
+			this.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1);
+			this.color = this.type;} 
 		grille.insertTetromino(teer);
 		grille.isLose(teer);
 	}
