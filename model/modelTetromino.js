@@ -74,57 +74,51 @@ class Tetromino {
 	}
 
 	
-	doRotateLeft(grille){
-		if (this.getMatrixRotateLeft()[0].length+this.getLocX()>10) {
+	doRotateRight(grille){
+		if (this.getMatrixRotateRight()[0].length+this.getLocX()>10 || this.getMatrixRotateRight().length+this.getLocY()>24) {
 			return grille;
 		}
 	
-		for (let i = 0; i < this.getMatrixRotateLeft().length; i++) {
-			for (let j = 0; j < this.getMatrixRotateLeft()[i].length; j++) {
-				if (this.getMatrixRotateLeft()[i][j]==1) {
-					if (grille.blocChain[this.getLocY()+i][this.getLocX()+j] != 0) {
-						if(this.getMatrix().length>i+1){
-							if (this.getMatrix()[i][j]!=1) {
-								return grille;
-							}
-						}
+		grille.deleteTetromino(this);
+
+		for (let i = 0; i < this.getMatrixRotateRight().length; i++) { //4
+			for (let j = 0; j < this.getMatrixRotateRight()[i].length; j++) { //1
+				if (this.getMatrixRotateRight()[i][j]==1) {
+					if (grille.getBlocChain()[this.getLocY()+i][this.getLocX()+j] != 0) {
+						grille.insertTetromino(this);
+						return grille;
 					}
 				}
 			}
 		}
-
-		grille.deleteTetromino(this);
 	
-		this.rotateLeft();
+		this.rotateRight();
 	
 		grille.insertTetromino(this);
 		return grille;
 	}
 
-	doMoveRight(grille){
-		if (this.getMatrix()[0].length+this.getLocX()>=10) {
+	
+	doRotateLeft(grille){
+		if (this.getMatrixRotateLeft()[0].length+this.getLocX()>10 || this.getMatrixRotateLeft().length+this.getLocY()>24) {
 			return grille;
 		}
-		for (let i = 0; i < this.getMatrix().length; i++) {
-			for (let j = 0; j < this.getMatrix()[i].length; j++) {
-				if (this.getMatrix()[i][j]==1) {
-					if (grille.blocChain[this.getLocY()+i][this.getLocX()+j+1] != 0) {
-						if(this.getMatrix()[0].length>j+1){
-							if(this.getMatrix()[i][j] != this.getMatrix()[i][j+1]){
-								return grille;
-							}
-						}
-						else{
-							return grille;
-						}
+		
+		grille.deleteTetromino(this);
+
+		for (let i = 0; i < this.getMatrixRotateLeft().length; i++) {
+			for (let j = 0; j < this.getMatrixRotateLeft()[i].length; j++) {
+				if (this.getMatrixRotateLeft()[i][j]==1) {
+					if (grille.blocChain[this.getLocY()+i][this.getLocX()+j] != 0) {
+						grille.insertTetromino(this);
+						return grille;
 					}
 				}
 			}
 		}
+
 	
-		grille.deleteTetromino(this);
-	
-		this.moveRight();
+		this.rotateLeft();
 	
 		grille.insertTetromino(this);
 		return grille;
@@ -158,9 +152,9 @@ class Tetromino {
 
 	}
 
-	doMoveDown(grille, score){
-		var ok = true;
+	doMoveDown(grille, score, next){
 	
+		var ok = true;
 		for (let i = 0; i < this.getMatrix().length; i++) {
 			for (let j = 0; j < this.getMatrix()[i].length; j++) {
 				if (this.getMatrix()[i][j]==1) {
@@ -168,7 +162,11 @@ class Tetromino {
 					if (this.getLocY()+i >= 23) {
 						score.add(grille.checkFullLine());
 						//this = createTetromino();
-						this.rdmTet(grille);
+						//gameLose = this.rdmTet(grille, next);
+						if(this.rdmTet(grille, next)){
+							console.log('il4');
+							return true;
+						}
 						ok = false;
 						break;
 					}
@@ -178,7 +176,11 @@ class Tetromino {
 							if(this.getMatrix()[i][j] != this.getMatrix()[i+1][j]){
 								score.add(grille.checkFullLine());
 								//this = createTetromino();
-								this.rdmTet(grille);
+								//gameLose = this.rdmTet(grille, next);
+								if(this.rdmTet(grille, next)){
+									console.log('il5');
+									return true;
+								}
 								ok = false;
 								break;
 							}
@@ -186,7 +188,11 @@ class Tetromino {
 						else{
 							score.add(grille.checkFullLine());
 							//this = createTetromino();
-							this.rdmTet(grille);
+							if(this.rdmTet(grille, next)){
+								console.log('il6');
+								return true;
+							}
+							//gameLose = this.rdmTet(grille, next);
 							ok = false;
 							break;
 						}
@@ -203,7 +209,12 @@ class Tetromino {
 					if (this.getLocY()+i >= 23) {
 						score.add(grille.checkFullLine());
 						//this = createTetromino();
-						this.rdmTet(grille);
+						
+						if(this.rdmTet(grille, next)){
+							console.log('il7');
+							return true;
+						}
+						//gameLose = this.rdmTet(grille, next);
 						break;
 					}
 					else if (grille.blocChain[this.getLocY()+i+1][this.getLocX()+j] != 0) {
@@ -211,7 +222,12 @@ class Tetromino {
 							if(this.getMatrix()[i][j] != this.getMatrix()[i+1][j]){
 								score.add(grille.checkFullLine());
 								//this = createTetromino();
-								this.rdmTet(grille);
+								
+								if(this.rdmTet(grille, next)){
+									console.log('il8');
+									return true;
+								}
+								//gameLose = this.rdmTet(grille, next);
 								ok = false;
 								break;
 							}
@@ -219,8 +235,91 @@ class Tetromino {
 						else{
 							score.add(grille.checkFullLine());
 							//this = createTetromino();
-							this.rdmTet(grille);
+							
+							if(this.rdmTet(grille, next)){
+								console.log('il9');
+								return true;
+							}
+							//gameLose = this.rdmTet(grille, next);
 							break;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	
+
+	doMoveDownInfinity(grille, score, next, gameLose){
+		
+		var ok = true;
+	
+		while(ok){
+			for (let i = 0; i < this.getMatrix().length; i++) {
+				for (let j = 0; j < this.getMatrix()[i].length; j++) {
+					if (this.getMatrix()[i][j]==1) {
+						//si le tetro touche le bas
+						if (this.getLocY()+i >= 23) {
+							score.add(grille.checkFullLine());
+							//this = createTetromino();
+							gameLose = this.rdmTet(grille, next);
+							ok = false;
+							break;
+						}
+		
+						else if (grille.blocChain[this.getLocY()+i+1][this.getLocX()+j] != 0) {
+							if(this.getMatrix().length>i+1){
+								if(this.getMatrix()[i][j] != this.getMatrix()[i+1][j]){
+									score.add(grille.checkFullLine());
+									//this = createTetromino();
+									gameLose = this.rdmTet(grille, next);
+									ok = false;
+									break;
+								}
+							}
+							else{
+								score.add(grille.checkFullLine());
+								//this = createTetromino();
+								gameLose = this.rdmTet(grille, next);
+								ok = false;
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (ok) {
+				this.makeMoveDown(grille);
+			}
+			for (let i = 0; i < this.getMatrix().length; i++) {
+				for (let j = 0; j < this.getMatrix()[i].length; j++) {
+					if (this.getMatrix()[i][j]==1) {
+						if (this.getLocY()+i >= 23) {
+							score.add(grille.checkFullLine());
+							//this = createTetromino();
+							gameLose = this.rdmTet(grille, next);
+							ok = false;
+							break;
+						}
+						else if (grille.blocChain[this.getLocY()+i+1][this.getLocX()+j] != 0) {
+							if(this.getMatrix().length>i+1){
+								if(this.getMatrix()[i][j] != this.getMatrix()[i+1][j]){
+									score.add(grille.checkFullLine());
+									//this = createTetromino();
+									gameLose = this.rdmTet(grille, next);
+									ok = false;
+									break;
+								}
+							}
+							else{
+								score.add(grille.checkFullLine());
+								//this = createTetromino();
+								gameLose = this.rdmTet(grille, next);
+								ok = false;
+								break;
+							}
 						}
 					}
 				}
@@ -247,18 +346,30 @@ class Tetromino {
 		}	
 	}
 
-	rdmTet(grille){
-		this.locX = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0)));
-		this.locY = 0;
-		this.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1);
-		this.color = this.type;
-		while (this.getMatrix()[0].length + teer.getLocX() - 1 >= 10){
-			this.locX = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0)));
-			this.locY = 0;
-			this.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1);
-			this.color = this.type;} 
-		grille.insertTetromino(teer);
-		grille.isLose(teer);
+	rdmTet(grille, next){
+		this.locX = next.locX;
+		this.locY = next.locY;
+		this.type = next.type;
+		this.color = next.color;
+
+		next.locX = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0)));
+		next.locY = 0;
+		next.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1);
+		next.color = next.type;
+		while (next.getMatrix()[0].length + next.getLocX() - 1 >= 10){
+			next.locX = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0)));
+			next.locY = 0;
+			next.type = Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1);
+			next.color = next.type;} 
+		grille.insertTetromino(this);
+		if(grille.isLose(this)){
+			console.log('il3');
+			return true;
+		}
+		else{
+			return false;
+		}
+		//return grille.isLose(this);
 	}
 
 
@@ -303,10 +414,8 @@ class Tetromino {
 
 function genTet(){
 	let teer = new Tetromino(Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0))), 0, ctx, Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1), Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1));
-	let matrix = teer.getMatrix();
-	while (matrix[0].length + teer.getLocX() - 1 >= 10){
+	while (teer.getMatrix()[0].length + teer.getLocX() - 1 >= 10){
 		teer = new Tetromino(Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0))), 0, ctx, Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1), Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1));
-		matrix = teer.getMatrix();
 	} 
 	return teer;
 }

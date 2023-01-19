@@ -31,22 +31,26 @@ class Grille {
     }
 
     isLose(teer){
+        var isLose = false;
         for (let i = 0; i < teer.getMatrix().length; i++) {
             for (let j = 0; j < teer.getMatrix()[i].length; j++) {
                 if (teer.getMatrix()[i][j]==1) {
                     if (this.blocChain[teer.getLocY()+i+1][teer.getLocX()+j] != 0) {
                         if(teer.getMatrix().length>i+1){
                             if(teer.getMatrix()[i][j] != teer.getMatrix()[i+1][j]){
-                                alert("lose");
+                                console.log("il1");
+                                isLose = true;
                             }
                         }
                         else{
-                            alert("lose");
+                            isLose = true;
+                            console.log("il2");
                         }
                     }
                 }
             }
         }
+        return isLose;
     }
 
     // verifie si une ligne est complete (a mettre dans model, de la grille je pense)

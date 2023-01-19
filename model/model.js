@@ -9,6 +9,9 @@ class Model {
         // init du score
         this.score = new Score(this.ctx, 0);
 
+        // init de la vairable définissant si on a perdu la partie
+        this.gameLose = false;
+
         // init de la grille
         this.grille = new Grille();
 
@@ -17,12 +20,19 @@ class Model {
 
         // init teer
         this.teer = this.createTetromino();
-        console.log(this.teer);
 
         // init next tetromino
-        
+        this.next = this.createTetrominext();
 
-        this.addScore(1);
+
+        //this.addScore(1);
+    }
+    
+    createTetrominext(){
+        //create a tetromino with random X
+        var next = genTet();
+        
+        return next;
     }
 
 
@@ -39,7 +49,7 @@ class Model {
     }
 
     drawCanva(){
-        this.draw(this.getScore(), this.getBotActive(), this.grille, this.teer);
+        this.draw(this.getScore(), this.getBotActive(), this.grille, this.next);
     }
 
     bindDrawCanva(callback){
@@ -53,13 +63,24 @@ class Model {
         //insert tetromini in the grid
         this.grille.insertTetromino(teer);
         //verify if lose
-        this.grille.isLose(teer);
+        this.gameLose = this.grille.isLose(teer);
         return teer;
     }
 
     doTheMoveDown(){
-        console.log(this.teer);
-        this.teer.doMoveDown(this.grille, this.score);
+        if(!this.gameLose){
+            if (this.teer.doMoveDown(this.grille, this.score, this.next)) {
+                this.gameLose = true;
+            }
+        }
+    }
+
+    doTheMoveDownInfinity(){
+        if(!this.gameLose){
+            if (this.teer.doMoveDownInfinity(this.grille, this.score, this.next)) {
+                this.gameLose = true;
+            }
+        }
     }
 
     

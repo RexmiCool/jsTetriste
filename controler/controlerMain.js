@@ -48,7 +48,16 @@ function createTetromino(){
     return teer;
 }
 
+function createTetrominext(){
+    //create a tetromino with random X
+    var next = genTet();
+    
+    return next;
+}
+
+console.log("ici");
 teer = createTetromino();
+next = createTetrominext();
 
 // fonction de dessin
 function draw(){

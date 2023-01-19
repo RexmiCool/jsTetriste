@@ -7,7 +7,7 @@ class View {
     }
 
     // fonction de dessin
-    draw(scoreNb, etat, grille, teer){
+    draw(scoreNb, etat, grille, next){
 
         // nettoyage du canva
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -15,7 +15,6 @@ class View {
         // mis a jour des dessins
         this.drawBg(600, 900);
         this.drawScore(scoreNb);
-		console.log(etat);
 		if(etat == true){
 			this.drawBtnBot("#00FF00");
 		}
@@ -32,10 +31,10 @@ class View {
 		}	
 	
 	
-		for (let i = 0; i < teer.getMatrixOriginal().length; i++) {
-			for (let j = 0; j < teer.getMatrixOriginal()[i].length; j++) {
-				if (teer.getMatrixOriginal()[i][j]==1) {
-					new Block(405+j*30, 135+i*30, ctx, colors[teer.getColor()]);
+		for (let i = 0; i < next.getMatrixOriginal().length; i++) {
+			for (let j = 0; j < next.getMatrixOriginal()[i].length; j++) {
+				if (next.getMatrixOriginal()[i][j]==1) {
+					new Block(405+j*30, 135+i*30, ctx, colors[next.getColor()]);
 				}
 			}
 		}
@@ -114,7 +113,6 @@ class View {
         this.ctx.shadowBlur = 10;
         this.ctx.shadowColor = "#FFFFFF";
         this.ctx.strokeText(nb, 465, 360);
-        console.log(nb);
     }
 
 	// dessin btn bot

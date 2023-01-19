@@ -22,8 +22,7 @@ class Controller {
 
         // appel toutes les 100 ms
         setInterval(this.jeu.bind(this), 100);
-        setInterval(this.model.doTheMoveDown.bind(this.model), 1000);
-
+        setInterval(this.model.doTheMoveDown.bind(this.model), 500);
         // init colors
     }
 
@@ -38,9 +37,9 @@ class Controller {
     
 
     // fonction bind
-    bindDrawCanva(score, etatBot, grille, teer)
+    bindDrawCanva(score, etatBot, grille, teer, next)
     {
-        this.view.draw(score, etatBot, grille, teer);
+        this.view.draw(score, etatBot, grille, teer, next);
     }
 }
 
@@ -55,7 +54,7 @@ document.addEventListener('keyup', (e) => {
     else if (e.code === "ArrowDown"){app.model.teer.doRotateLeft(app.model.grille)}
     else if (e.code === "ArrowRight"){app.model.teer.doMoveRight(app.model.grille)}
     else if (e.code === "ArrowLeft"){app.model.teer.doMoveLeft(app.model.grille)}
-    else if (e.code === "Space"){app.model.teer.doMoveDown(app.model.grille, app.model.score)}
+    else if (e.code === "Space"){app.model.doTheMoveDownInfinity()}
 });
 
 // event click
