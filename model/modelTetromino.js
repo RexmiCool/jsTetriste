@@ -47,34 +47,6 @@ class Tetromino {
 	}
 
 	doRotateRight(grille){
-		if (this.getMatrixRotateRight()[0].length+this.getLocX()>10) {
-			return grille;
-		}
-	
-		for (let i = 0; i < this.getMatrixRotateRight().length; i++) {
-			for (let j = 0; j < this.getMatrixRotateRight()[i].length; j++) {
-				if (this.getMatrixRotateRight()[i][j]==1) {
-					if (grille.getBlocChain()[this.getLocY()+i][this.getLocX()+j] != 0) {
-						if(this.getMatrix().length>i+1){
-							if (this.getMatrix()[i][j]!=1) {
-								return grille;
-							}
-						}
-					}
-				}
-			}
-		}
-	
-		grille.deleteTetromino(this);
-	
-		this.rotateRight();
-	
-		grille.insertTetromino(this);
-		return grille;
-	}
-
-	
-	doRotateRight(grille){
 		if (this.getMatrixRotateRight()[0].length+this.getLocX()>10 || this.getMatrixRotateRight().length+this.getLocY()>24) {
 			return grille;
 		}
@@ -119,6 +91,35 @@ class Tetromino {
 
 	
 		this.rotateLeft();
+	
+		grille.insertTetromino(this);
+		return grille;
+	}
+
+	doMoveRight(grille){
+		if (this.getMatrix()[0].length+this.getLocX()>=10) {
+			return grille;
+		}
+		for (let i = 0; i < this.getMatrix().length; i++) {
+			for (let j = 0; j < this.getMatrix()[i].length; j++) {
+				if (this.getMatrix()[i][j]==1) {
+					if (grille.blocChain[this.getLocY()+i][this.getLocX()+j+1] != 0) {
+						if(this.getMatrix()[0].length>j+1){
+							if(this.getMatrix()[i][j] != this.getMatrix()[i][j+1]){
+								return grille;
+							}
+						}
+						else{
+							return grille;
+						}
+					}
+				}
+			}
+		}
+	
+		grille.deleteTetromino(this);
+	
+		this.moveRight();
 	
 		grille.insertTetromino(this);
 		return grille;
