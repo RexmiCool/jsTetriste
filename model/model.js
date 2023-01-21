@@ -27,6 +27,23 @@ class Model {
 
         //this.addScore(1);
     }
+
+    
+    // gestion du click sur le btn
+    click(e, canvas){
+        if (this.gameLose) {
+            this.gameLose=false;
+            this.score.scoreNb = 0;
+            this.grille = new Grille();
+            this.teer = this.createTetromino();
+            this.next = this.createTetrominext();
+        }
+    }
+
+    defTimeOut(){
+        this.doTheMoveDown();
+        setTimeout(this.defTimeOut.bind(this), 1000-this.score.scoreNb*3);
+    }
     
     createTetrominext(){
         //create a tetromino with random X
@@ -49,7 +66,7 @@ class Model {
     }
 
     drawCanva(){
-        this.draw(this.getScore(), this.getBotActive(), this.grille, this.next);
+        this.draw(this.getScore(), this.getBotActive(), this.grille, this.next, this.gameLose);
     }
 
     bindDrawCanva(callback){
@@ -69,10 +86,141 @@ class Model {
 
     doTheMoveDown(){
         if(!this.gameLose){
+            this.grille.deleteTetromino(this.teer);
+
+            if (this.bot.active) {
+                var hmaxpc = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
+                var nbtrou = 0;
+                for (let i = 0; i < this.grille.blocChain.length; i++) {
+                    for (let j = 0; j < this.grille.blocChain[i].length; j++) {
+                        if (this.grille.blocChain[i][j] != 0) {
+                            hmaxpc[j] = hmaxpc[j] > i ? i : hmaxpc[j];
+                        }
+                        
+                        if (this.grille.blocChain[i][j] == 0 && i > 0) {
+                            if (this.grille.blocChain[i-1][j] != 0) {
+                                nbtrou++;
+                            }
+                        }
+                    }
+                }
+
+                var hmax = Math.min.apply(Math, hmaxpc);
+                var hs = -100000;
+                var hsX = 0;
+                var hsOr = 0;
+
+                for (let col = 0; col < 10; col++) {
+                    for (let or = 1; or <= 4; or++) {
+                        
+                        var possible = false;
+                        var posPoss = hmaxpc[col];
+                        do {
+                            posPoss--;
+                            possible =this.grille.isTetrominoInserable(this.teer, col, posPoss, or);
+                        } while (!possible && posPoss > 1);
+                        
+                        if(possible){
+                            //console.log("posPossPass : "+posPoss+" col : "+col+" or : "+or);
+                            this.grille.insertTetrominoCoOr(this.teer, posPoss, col, or);
+
+                            var hmaxpcBis = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
+                            for (let i = 0; i < 24; i++) {
+                                for (let j = 0; j < 10; j++) {
+                                    if (this.grille.blocChain[i][j] != 0) {
+                                        hmaxpcBis[j] = hmaxpcBis[j] > i ? i : hmaxpcBis[j];
+                                    }
+                                }
+                            }
+
+                            var nbtrou = 0;
+                            for (let i = 0; i < 10; i++) {
+                                for (let j = 23; j > hmaxpcBis[i]; j--) {
+                                    //console.log(i);
+                                    //console.log(j);
+                                    if (this.grille.blocChain[j][i] == 0) {
+                                        nbtrou++;
+                                    }
+                                }
+                            }
+
+                            var hmax = Math.min.apply(Math, hmaxpcBis);
+
+                            var newScore = this.grille.checkFullLineBot();
+                            var varHautCol = 0;
+                            for (let i = 0; i < 9; i++) {
+                                varHautCol += Math.abs(hmaxpcBis[i] - hmaxpcBis[i+1]);
+                            }
+
+                            //var points = nbtrou * (-1) + varHautCol * (-0.1) + newScore * 1 + hmax * (1) ;
+                            //var points = nbtrou * (-0.6763430639849509) + varHautCol * (-0.9030889001676913) + newScore * (0.2280655440523947) + hmax * (0.589612894116009 ) ;
+                        //var points = hmax * (100);// + newScore * 1 ;
+                        //var points = nbtrou * (-0.1516741306703968) + varHautCol * (-0.19087878312923057) + newScore * (0.4579172890221702) + hmax * (0.1247033950880867) ;
+                        //var points = nbtrou * (-0.8968712822912144) + varHautCol * (-0.18286117353403528) + newScore * (0.3312266298460219) + hmax * (-0.0024466543577278893) ;
+                        var points = nbtrou * (-0.9709277244380525) + varHautCol * (-0.14796513032511963) + newScore * (0.3715651379045553) + hmax * (0.14420987547345482) ;
+                        
+                            //console.log("nbtrou " + nbtrou * (-1));
+                            //console.log("varHautCol " + varHautCol * (-0.1));
+                            //console.log("newScore " + newScore);
+                            //console.log("hmax " + hmax);
+                            //console.log("===========");
+                            //console.log("points " + points);
+                            //console.log("col " + col);
+                            //console.log("or " + or);
+
+                            if (points > hs) {
+                                hs = points;
+                                hsX = col;
+                                hsOr = or;
+                            }
+                            this.grille.deleteTetrominoCoOr(this.teer, col, posPoss, or);
+                        }
+                    }
+                }
+
+                //console.log("hs");
+                //console.log(hs);
+                //console.log(hsX);
+                //console.log(hsOr);
+
+                //this.teer.locX = hsX;
+                //this.teer.orientation = hsOr;
+
+
+
+                if (this.teer.locX != hsX || this.teer.orientation != hsOr) {
+                    for (let index = 0; index < 10; index++) {
+                        if (this.teer.orientation != hsOr) {
+                            if (this.teer.orientation > hsOr) {
+                                this.teer.doRotateRight(this.grille);
+                            }
+                            else{
+                                this.teer.doRotateLeft(this.grille);
+                            }
+                        }
+
+                        else if (this.teer.locX != hsX) {
+                            if (this.teer.locX < hsX) {
+                                this.teer.doMoveRight(this.grille);
+                            }
+                            else{
+                                this.teer.doMoveLeft(this.grille);
+                            }
+                        }
+                    }
+                }
+                else{
+                    this.doTheMoveDownInfinity();
+                }
+            }
+
+            this.grille.insertTetromino(this.teer);
+
+        
             if (this.teer.doMoveDown(this.grille, this.score, this.next)) {
                 this.gameLose = true;
             }
-        }
+        }        
     }
 
     doTheMoveDownInfinity(){

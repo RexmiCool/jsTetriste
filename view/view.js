@@ -7,7 +7,7 @@ class View {
     }
 
     // fonction de dessin
-    draw(scoreNb, etat, grille, next){
+    draw(scoreNb, etat, grille, next, lose){
 
         // nettoyage du canva
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -37,6 +37,10 @@ class View {
 					new Block(405+j*30, 135+i*30, ctx, colors[next.getColor()]);
 				}
 			}
+		}
+
+		if (lose) {
+			this.drawGameOver(scoreNb);
 		}
 		
     }
@@ -135,4 +139,64 @@ class View {
 		this.ctx.shadowColor = color;
 		this.ctx.strokeText('BOT', 465, 450);
     }
+
+	
+    // dessine le GAME OVER
+	drawGameOver(scoreNb){
+		// arriere plan
+		this.ctx.beginPath();
+		this.ctx.rect(40, 200, 520, 400);
+		this.ctx.fillStyle = "#000000";
+		this.ctx.fill();
+		this.ctx.closePath();
+
+		
+		// border
+		this.ctx.beginPath();
+		this.ctx.rect(40, 200, 520, 400);
+		this.ctx.strokeStyle = "#ff8000";
+		this.ctx.shadowBlur = 10;
+		this.ctx.shadowColor = "#ff8000";
+		this.ctx.stroke();
+		this.ctx.closePath();
+
+
+		// titre
+		this.ctx.font = 'bold 60px Verdana, Arial, serif';
+		this.ctx.strokeStyle = "#ff8000";
+		this.ctx.textAlign = "center";
+		this.ctx.textBaseline = "middle";
+		this.ctx.shadowBlur = 10;
+		this.ctx.shadowColor = "#ff8000";
+		this.ctx.strokeText('GAME OVER', 300, 280);
+
+
+		// score
+		this.ctx.font = 'bold 30px Verdana, Arial, serif';
+		this.ctx.strokeStyle = "#ff8000";
+		this.ctx.textAlign = "center";
+		this.ctx.textBaseline = "middle";
+		this.ctx.shadowBlur = 10;
+		this.ctx.shadowColor = "#ff8000";
+		this.ctx.strokeText('You reach : '+scoreNb, 300, 400);
+
+		// arriere plan btn
+		this.ctx.beginPath();
+		this.ctx.rect(160, 460, 300, 100);
+		this.ctx.strokeStyle = "#ff8000";
+        this.ctx.shadowBlur = 10;
+		this.ctx.shadowColor = "#ff8000";
+		this.ctx.stroke();
+		this.ctx.closePath();
+
+        // text btn
+        this.ctx.font = 'bold 40px Verdana, Arial, serif';
+		this.ctx.strokeStyle = "#ffffff";
+		this.ctx.textAlign = "center";
+		this.ctx.textBaseline = "middle";
+		this.ctx.shadowBlur = 10;
+		this.ctx.shadowColor = "#ffffff";
+		this.ctx.strokeText('PLAY AGAIN', 310, 510);
+	}
+
 }

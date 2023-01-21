@@ -47,12 +47,6 @@ class Bot {
 
     // gestion du click sur le btn
     click(e, canvas){
-        var canvasPosition = canvas.getBoundingClientRect();
-        var inputX = e.pageX - canvasPosition.left;
-        var inputY = e.pageY - canvasPosition.top;
-
-        if (inputX > 405 && inputX < 525 && inputY > 420 && inputY < 480){
-            this.changeEtat();
-        }
+        this.changeEtat();
     }
 }

@@ -11,14 +11,27 @@ class Grille {
     }
 
     deleteTetromino(teer){
-      for (let i = 0; i < teer.getMatrix().length; i++) {
-        for (let j = 0; j < teer.getMatrix()[i].length; j++) {
-            if (teer.getMatrix()[i][j]==1) {
-                this.blocChain[teer.getLocY()+i][teer.getLocX()+j] = 0;
+        for (let i = 0; i < teer.getMatrix().length; i++) {
+            for (let j = 0; j < teer.getMatrix()[i].length; j++) {
+                if (teer.getMatrix()[i][j]==1) {
+                    this.blocChain[teer.getLocY()+i][teer.getLocX()+j] = 0;
+                }
+                if (teer.getMatrix()[i][j]==1) {
+                    this.blocChain[teer.getLocY()+i][teer.getLocX()+j] = 0;
+                }
             }
         }
-      }
     }
+    
+    deleteTetrominoCoOr(teer ,X ,Y, Or){
+        for (let i = 0; i < teer.getMatrixByOrientation(Or).length; i++) {
+          for (let j = 0; j < teer.getMatrixByOrientation(Or)[i].length; j++) {
+              if (teer.getMatrixByOrientation(Or)[i][j]==1) {
+                  this.blocChain[Y+i][X+j] = 0;
+              }
+          }
+        }
+      }
 
     insertTetromino(teer){
       for (let i = 0; i < teer.getMatrix().length; i++) {
@@ -30,6 +43,44 @@ class Grille {
       }
     }
 
+    insertTetrominoCoOr(teer ,Y ,X, Or){
+        //console.log("deb");
+        //console.log(this.blocChain);
+        for (let i = 0; i < teer.getMatrixByOrientation(Or).length; i++) {
+            for (let j = 0; j < teer.getMatrixByOrientation(Or)[i].length; j++) {
+                //console.log("i : "+i);
+                //console.log("j : "+j);
+                //console.log("teer.getMatrixByOrientation(Or) : ");
+                //console.log(teer.getMatrixByOrientation(Or));
+                if (teer.getMatrixByOrientation(Or)[i][j]==1) {
+                    this.blocChain[Y+i][X+j] = teer.getColor();
+                }
+            }
+        }
+        //console.log(this.blocChain);
+    }
+
+    
+
+    isTetrominoInserable(teer, X, Y, or){
+        var possible = true;
+        for (let i = 0; i < teer.getMatrixByOrientation(or).length; i++) {
+            for (let j = 0; j < teer.getMatrixByOrientation(or)[i].length; j++) {
+                if (teer.getMatrixByOrientation(or)[i][j]==1) {
+                    if ((0 <= Y + i) && (Y + i < 24) && (X + j < 10) && (0 <= X + j)) {
+                        if (this.blocChain[Y + i][X + j] != 0) {
+                            possible = false;
+                        }
+                    } 
+                    else {
+                        possible = false;
+                    }
+                }
+            }
+        }
+        return possible;
+    }
+
     isLose(teer){
         var isLose = false;
         for (let i = 0; i < teer.getMatrix().length; i++) {
@@ -38,13 +89,11 @@ class Grille {
                     if (this.blocChain[teer.getLocY()+i+1][teer.getLocX()+j] != 0) {
                         if(teer.getMatrix().length>i+1){
                             if(teer.getMatrix()[i][j] != teer.getMatrix()[i+1][j]){
-                                console.log("il1");
                                 isLose = true;
                             }
                         }
                         else{
                             isLose = true;
-                            console.log("il2");
                         }
                     }
                 }
@@ -70,6 +119,23 @@ class Grille {
       }	
       return nbFull;
     }
+
+    
+    checkFullLineBot(){
+        let nbFull = 0;
+        for (let i = 0; i < 24; i++) {
+            var lineFull = true;
+            for (let j = 0; j < 10; j++) {
+                if (this.blocChain[i][j]==0) {
+                    lineFull = false;
+                }
+            }
+            if (lineFull) {
+                nbFull++;
+            }
+        }	
+        return nbFull;
+      }
 
     // clean la ligne complete (a mettre dans model, de la grille je pense)
     cleanLine(numLine){

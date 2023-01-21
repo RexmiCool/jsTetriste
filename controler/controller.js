@@ -22,14 +22,14 @@ class Controller {
 
         // appel toutes les 100 ms
         setInterval(this.jeu.bind(this), 100);
-        setInterval(this.model.doTheMoveDown.bind(this.model), 500);
-        // init colors
+        //setInterval(this.model.doTheMoveDown.bind(this.model), 1000);
+        this.model.defTimeOut();
     }
 
     // fonction jeu
     jeu(){
 
-        this.model.drawCanva();
+        this.model.drawCanva(); 
 
         
     }
@@ -59,5 +59,14 @@ document.addEventListener('keyup', (e) => {
 
 // event click
 canvas.onclick = function(event) {
-    app.model.bot.click(event, canvas);
+    var canvasPosition = canvas.getBoundingClientRect();
+    var inputX = event.pageX - canvasPosition.left;
+    var inputY = event.pageY - canvasPosition.top;
+    if (inputX > 405 && inputX < 525 && inputY > 420 && inputY < 480){
+        app.model.bot.click(event, canvas);
+    }
+    else if (inputX > 160 && inputX < 460 && inputY > 460 && inputY < 560){
+        app.model.click(event, canvas);
+    }
+    
 }
