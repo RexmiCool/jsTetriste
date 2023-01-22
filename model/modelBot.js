@@ -17,13 +17,13 @@ class Bot {
         }
     }
 
-    // getter
+    // guetteur de la cité qui crie le aha
     getEtat(){
         return this.active;
     }
 
     // gestion du click sur le btn
-    click(e, canvas){
+    click(e){
         this.changeEtat();
     }
 }

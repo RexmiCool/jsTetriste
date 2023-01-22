@@ -63,10 +63,10 @@ canvas.onclick = function(event) {
     var inputX = event.pageX - canvasPosition.left;
     var inputY = event.pageY - canvasPosition.top;
     if (inputX > 405 && inputX < 525 && inputY > 420 && inputY < 480){
-        app.model.bot.click(event, canvas);
+        app.model.bot.click(event);
     }
     else if (inputX > 160 && inputX < 460 && inputY > 460 && inputY < 560){
-        app.model.click(event, canvas);
+        app.model.click(event);
     }
     
 }

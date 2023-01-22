@@ -27,7 +27,7 @@ class Model {
 
     
     // gestion du click sur le btn
-    click(e, canvas){
+    click(e){
         if (this.gameLose) {
             this.gameLose=false;
             this.score.scoreNb = 0;
@@ -164,7 +164,7 @@ class Model {
                 }
 
                 if (this.teer.locX != hsX || this.teer.orientation != hsOr) {
-                    for (let index = 0; index < 10; index++) {
+                    for (let index = 0; index < 2; index++) {
                         if (this.teer.orientation != hsOr) {
                             if (this.teer.orientation > hsOr) {
                                 this.teer.doRotateRight(this.grille);
