@@ -44,20 +44,13 @@ class Grille {
     }
 
     insertTetrominoCoOr(teer ,Y ,X, Or){
-        //console.log("deb");
-        //console.log(this.blocChain);
         for (let i = 0; i < teer.getMatrixByOrientation(Or).length; i++) {
             for (let j = 0; j < teer.getMatrixByOrientation(Or)[i].length; j++) {
-                //console.log("i : "+i);
-                //console.log("j : "+j);
-                //console.log("teer.getMatrixByOrientation(Or) : ");
-                //console.log(teer.getMatrixByOrientation(Or));
                 if (teer.getMatrixByOrientation(Or)[i][j]==1) {
                     this.blocChain[Y+i][X+j] = teer.getColor();
                 }
             }
         }
-        //console.log(this.blocChain);
     }
 
     

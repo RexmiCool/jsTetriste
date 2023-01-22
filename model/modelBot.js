@@ -1,32 +1,9 @@
 class Bot {
 
-    constructor(ctx) {
-        this.ctx = ctx;
+    constructor() {
 		this.active = false;
         this.color = "#FF0000";
-		//this.drawBtn();
 	}
-
-    // dessin du btn
-    drawBtn(){
-        // arriere plan btn
-		this.ctx.beginPath();
-		this.ctx.rect(405, 420, 120, 60);
-		this.ctx.strokeStyle = this.color;
-        this.ctx.shadowBlur = 10;
-		this.ctx.shadowColor = this.color;
-		this.ctx.stroke();
-		this.ctx.closePath();
-
-        // text btn
-        this.ctx.font = 'bold 30px Verdana, Arial, serif';
-		this.ctx.strokeStyle = this.color;
-		this.ctx.textAlign = "center";
-		this.ctx.textBaseline = "middle";
-		this.ctx.shadowBlur = 10;
-		this.ctx.shadowColor = this.color;
-		this.ctx.strokeText('BOT', 465, 450);
-    }
 
     // activation / desactivation du bot
     changeEtat(){

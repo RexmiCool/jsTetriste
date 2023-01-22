@@ -1,13 +1,10 @@
 
 
 class Model {
-    constructor(ctx) {
-
-        // init du contexte
-        this.ctx = ctx;
+    constructor() {
 
         // init du score
-        this.score = new Score(this.ctx, 0);
+        this.score = new Score(0);
 
         // init de la vairable définissant si on a perdu la partie
         this.gameLose = false;
@@ -16,7 +13,7 @@ class Model {
         this.grille = new Grille();
 
         // init du bot
-        this.bot = new Bot(this.ctx);
+        this.bot = new Bot();
 
         // init teer
         this.teer = this.createTetromino();
@@ -136,8 +133,6 @@ class Model {
                             var nbtrou = 0;
                             for (let i = 0; i < 10; i++) {
                                 for (let j = 23; j > hmaxpcBis[i]; j--) {
-                                    //console.log(i);
-                                    //console.log(j);
                                     if (this.grille.blocChain[j][i] == 0) {
                                         nbtrou++;
                                     }
@@ -158,16 +153,6 @@ class Model {
                         //var points = nbtrou * (-0.1516741306703968) + varHautCol * (-0.19087878312923057) + newScore * (0.4579172890221702) + hmax * (0.1247033950880867) ;
                         //var points = nbtrou * (-0.8968712822912144) + varHautCol * (-0.18286117353403528) + newScore * (0.3312266298460219) + hmax * (-0.0024466543577278893) ;
                         var points = nbtrou * (-0.9709277244380525) + varHautCol * (-0.14796513032511963) + newScore * (0.3715651379045553) + hmax * (0.14420987547345482) ;
-                        
-                            //console.log("nbtrou " + nbtrou * (-1));
-                            //console.log("varHautCol " + varHautCol * (-0.1));
-                            //console.log("newScore " + newScore);
-                            //console.log("hmax " + hmax);
-                            //console.log("===========");
-                            //console.log("points " + points);
-                            //console.log("col " + col);
-                            //console.log("or " + or);
-
                             if (points > hs) {
                                 hs = points;
                                 hsX = col;
@@ -177,16 +162,6 @@ class Model {
                         }
                     }
                 }
-
-                //console.log("hs");
-                //console.log(hs);
-                //console.log(hsX);
-                //console.log(hsOr);
-
-                //this.teer.locX = hsX;
-                //this.teer.orientation = hsOr;
-
-
 
                 if (this.teer.locX != hsX || this.teer.orientation != hsOr) {
                     for (let index = 0; index < 10; index++) {

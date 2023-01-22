@@ -9,10 +9,9 @@ let dictForms = {
 };
 
 class Tetromino {
-	constructor(locX, locY, ctx, type) {
+	constructor(locX, locY, type) {
 		this.locX = locX;
 		this.locY = locY;
-		this.ctx = ctx;
 		this.color = type;
 		this.type = type;
 		this.orientation = 1;
@@ -391,7 +390,7 @@ class Tetromino {
 		for (let i = 0; i < dictForms[this.type][this.orientation].length; i++) {
 			for (let j = 0; j < dictForms[this.type][this.orientation][i].length; j++) {
 				if (dictForms[this.type][this.orientation][i][j]==1) {
-					let ter = new Block(this.locX+j*30, this.locY+i*30, ctx, this.color);
+					let ter = new Block(this.locX+j*30, this.locY+i*30, this.color);
 				}
 			}
 		}		
@@ -400,9 +399,9 @@ class Tetromino {
 
 
 function genTet(){
-	let teer = new Tetromino(Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0))), 0, ctx, Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1), Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1));
+	let teer = new Tetromino(Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0))), 0, Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1), Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1));
 	while (teer.getMatrix()[0].length + teer.getLocX() - 1 >= 10){
-		teer = new Tetromino(Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0))), 0, ctx, Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1), Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1));
+		teer = new Tetromino(Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0))), 0, Math.floor(Math.random() * (Math.floor(7) - Math.ceil(1))) +  Math.ceil(1), Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1))) +  Math.ceil(1));
 	} 
 	return teer;
 }

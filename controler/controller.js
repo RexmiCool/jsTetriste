@@ -46,7 +46,7 @@ class Controller {
 
 var canvas = document.getElementById('tetris');
 var ctx = canvas.getContext('2d');
-const app = new Controller(new Model(ctx), new View(ctx));
+const app = new Controller(new Model(), new View(ctx));
 
 // event clavier
 document.addEventListener('keyup', (e) => {
