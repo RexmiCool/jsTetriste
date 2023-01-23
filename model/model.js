@@ -39,7 +39,7 @@ class Model {
 
     defTimeOut(){
         this.doTheMoveDown();
-        setTimeout(this.defTimeOut.bind(this), this.score.scoreNb<200 ? 1000-this.score.scoreNb*3 : 400);
+        setTimeout(this.defTimeOut.bind(this), this.score.scoreNb<200 ? 1000-this.score.scoreNb*4 : 200);
     }
     
     createTetrominext(){
